@@ -153,9 +153,7 @@ static const char * af_backgroundImageDownloadReceiptKeyForState(UIControlState 
         }
         [self af_setImageDownloadReceipt:nil forState:state];
     } else {
-        if (placeholderImage) {
-            [self setImage:placeholderImage forState:state];
-        }
+        [self setImage:placeholderImage forState:state];
 
         __weak __typeof(self)weakSelf = self;
         NSUUID *downloadID = [NSUUID UUID];
@@ -232,9 +230,7 @@ static const char * af_backgroundImageDownloadReceiptKeyForState(UIControlState 
         }
         [self af_setBackgroundImageDownloadReceipt:nil forState:state];
     } else {
-        if (placeholderImage) {
-            [self setBackgroundImage:placeholderImage forState:state];
-        }
+        [self setBackgroundImage:placeholderImage forState:state];
 
         __weak __typeof(self)weakSelf = self;
         NSUUID *downloadID = [NSUUID UUID];
