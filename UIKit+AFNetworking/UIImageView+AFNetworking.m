@@ -101,9 +101,7 @@
         }
         [self clearActiveDownloadInformation];
     } else {
-        if (placeholderImage) {
-            self.image = placeholderImage;
-        }
+        self.image = placeholderImage;
 
         __weak __typeof(self)weakSelf = self;
         NSUUID *downloadID = [NSUUID UUID];
