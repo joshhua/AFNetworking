@@ -240,7 +240,7 @@
                        completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
                            dispatch_async(self.responseQueue, ^{
                                __strong __typeof__(weakSelf) strongSelf = weakSelf;
-                               AFImageDownloaderMergedTask *mergedTask = self.mergedTasks[URLIdentifier];
+                               AFImageDownloaderMergedTask *mergedTask = [strongSelf safelyAccessMergedTaskWithIdentifier:URLIdentifier];
                                if ([mergedTask.identifier isEqual:mergedTaskIdentifier]) {
                                    mergedTask = [strongSelf safelyRemoveMergedTaskWithURLIdentifier:URLIdentifier];
                                    if (error) {
@@ -294,6 +294,14 @@
     } else {
         return nil;
     }
+}
+
+- (AFImageDownloaderMergedTask *)safelyAccessMergedTaskWithIdentifier:(NSString *)identifier {
+    __block AFImageDownloaderMergedTask *task = nil;
+    dispatch_sync(self.synchronizationQueue, ^(void){
+        task = self.mergedTasks[identifier];
+    });
+    return task;
 }
 
 - (void)cancelTaskForImageDownloadReceipt:(AFImageDownloadReceipt *)imageDownloadReceipt {
